@@ -1,4 +1,4 @@
-package com.github.sejoung.configuration;
+package com.github.sejoung.jobs;
 
 import com.github.sejoung.TestBatchConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -15,20 +15,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @Slf4j
 @SpringBatchTest
-@SpringBootTest(classes = {JobSimpleTaskLetConfiguration.class, TestBatchConfig.class})
+@SpringBootTest(classes = {JobSimpleReadProcessWriter.class, TestBatchConfig.class})
 @RunWith(SpringRunner.class)
-public class JobSimpleTaskLetConfigurationTest {
+public class JobSimpleReadProcessWriterTest {
 
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
+
     @Test
-    public void test() throws Exception {
+    public void 통합테스트() throws Exception {
 
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
         Assert.assertEquals(ExitStatus.COMPLETED.getExitCode(),
             jobExecution.getExitStatus().getExitCode());
 
     }
-
 }

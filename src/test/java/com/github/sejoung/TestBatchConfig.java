@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @EnableBatchProcessing
-@ComponentScan(basePackages = "com.github.sejoung.configuration")
+@ComponentScan(basePackages = "com.github.sejoung.component")
 public class TestBatchConfig {
 
 }
