@@ -22,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JobSimpleReadProcessWriter {
 
-    private static final int CHUNKSIZE = 1000;
-    
+    private static final int CHUNK_SIZE = 1000;
+
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
@@ -38,7 +38,7 @@ public class JobSimpleReadProcessWriter {
 
     @Bean
     public Step step2() {
-        return this.stepBuilderFactory.get("step2").<Reader, Writer>chunk(CHUNKSIZE)
+        return this.stepBuilderFactory.get("step2").<Reader, Writer>chunk(CHUNK_SIZE)
             .reader(reader())
             .processor(processor()).writer(customItemWriter()).build();
     }
@@ -49,7 +49,7 @@ public class JobSimpleReadProcessWriter {
         var reader = new JpaPagingItemReader<Reader>();
         reader.setEntityManagerFactory(entityManagerFactory);
         reader.setQueryString("select r From Reader r where r.synchronizeType = 'N'");
-        reader.setPageSize(CHUNKSIZE);
+        reader.setPageSize(CHUNK_SIZE);
         reader.setName("reader");
         return reader;
     }
