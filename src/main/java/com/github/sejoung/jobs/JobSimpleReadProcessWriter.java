@@ -14,6 +14,7 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,12 +47,9 @@ public class JobSimpleReadProcessWriter {
     @Bean
     @StepScope
     public JpaPagingItemReader<Reader> reader() {
-        var reader = new JpaPagingItemReader<Reader>();
-        reader.setEntityManagerFactory(entityManagerFactory);
-        reader.setQueryString("select r From Reader r where r.synchronizeType = 'N'");
-        reader.setPageSize(CHUNK_SIZE);
-        reader.setName("reader");
-        return reader;
+        return new JpaPagingItemReaderBuilder<Reader>().name("reader")
+            .queryString("select r From Reader r where r.synchronizeType = 'N'")
+            .pageSize(CHUNK_SIZE).entityManagerFactory(entityManagerFactory).build();
     }
 
     @Bean
